@@ -22,7 +22,7 @@ def wrapfig(key, val, fmt, meta):
             size = FLAG_PAT.match(caption[-1]['c']).group(1)
             stripped_caption = caption[:-2]
             if fmt == 'latex':
-                latex_begin = r'\setlength{\intextsep}{2pt}\setlength{\columnsep}{8pt}\begin{wrapfigure}{r}{' + size + 'in}'
+                latex_begin = r'\setlength{\intextsep}{2pt}\setlength{\columnsep}{8pt}\begin{wrapfigure}{R}{' + size + 'in}'
                 if len(stripped_caption) > 0:
                     latex_fig = r'\centering\includegraphics{' + target[0] \
                                 + '}\caption{'
