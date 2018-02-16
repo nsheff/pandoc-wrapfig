@@ -26,12 +26,12 @@ def wrapfig(key, val, fmt, meta):
                 if len(stripped_caption) > 0:
                     latex_fig = r'\centering\includegraphics{' + target[0] \
                                 + '}\caption{'
-                    latex_end = r'}\end{wrapfigure}'
+                    latex_end = r'}\vspace{-5pt}\end{wrapfigure}'
                     return [RawInline(fmt, latex_begin + latex_fig)] \
                             + stripped_caption + [RawInline(fmt, latex_end)]
                 else:
                     latex_fig = r'\centering\includegraphics{' + target[0] \
-                                + '}'
+                                + '}\vspace{-5pt}'
                     latex_end = r'\end{wrapfigure}'
                     return [RawInline(fmt, latex_begin + latex_fig)] \
                             + [RawInline(fmt, latex_end)]
