@@ -31,7 +31,7 @@ def wrapfig(key, val, fmt, meta):
                             + stripped_caption + [RawInline(fmt, latex_end)]
                 else:
                     latex_fig = r'\centering\includegraphics{' + target[0] \
-                                + '}\vspace{-5pt}'
+                                + '}'
                     latex_end = r'\end{wrapfigure}'
                     return [RawInline(fmt, latex_begin + latex_fig)] \
                             + [RawInline(fmt, latex_end)]
