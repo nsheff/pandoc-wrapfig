@@ -9,18 +9,37 @@ cause the width of the figure to be used.
 
 """
 
-from pandocfilters import toJSONFilter, Image, RawInline, stringify
+from pandocfilters import toJSONFilter, Image, RawInline, stringify, Div, RawBlock
 import re, sys
 
 FLAG_PAT = re.compile('.*\{(\d+\.?\d?)\}')
 
+def html(x):
+    return RawBlock('html', x)
+
+
+
 def wrapfig(key, val, fmt, meta):
+    # if key == "Div":
+    #     sys.stderr.write(key)
+    #     # join(str(x) for x in caption)
+    #     [[ident, classes, kvs], contents] = val
+    #     newcontents = [html('<dt>Theorem ' + str("hello") + '</dt>'),
+    #     html('<dd>')] + contents + [html('</dd>')]
+    #     return Div([ident, classes, kvs], newcontents)
+    if key == 'Latex':
+        sys.stderr.write(key)
     if key == 'Image':
         attrs, caption, target = val
+
+        if fmt == 'markdown' or fmt == 'html':
+            return [Image(attrs, caption, target)] + \
+            [RawInline(fmt, "<span class='caption'>")] + caption + [RawInline(fmt, "</span>")]
         if FLAG_PAT.match(stringify(caption)):
             # Strip tag
             size = FLAG_PAT.match(caption[-1]['c']).group(1)
             stripped_caption = caption[:-2]
+            # sys.stderr.write(caption[:-2])  
             if fmt == 'latex':
                 latex_begin = r'\setlength{\intextsep}{2pt}\setlength{\columnsep}{8pt}\begin{wrapfigure}{R}{' + size + 'in}'
                 if len(stripped_caption) > 0:
